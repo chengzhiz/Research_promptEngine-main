@@ -28,16 +28,19 @@ function delSvgToLi(clicked_id) {
     ele = document.getElementById("renderText")
     ele.innerHTML = ""
   }
-  components -= 1
+  // components -= 1
   getFullText()
 }
 
 
 function addStyle() {
   str = "rendering"
-  oc = `addColor(${components}, 3)` 
-  i = components
-  li =
+  fakeComponents = 100
+  oc = `addColor(${fakeComponents}, 3)` 
+  i = fakeComponents
+  var element = document.getElementById('tag#100');
+  if (element == null) {
+    li =
     `
       <li class="nav-item deleteTag" id="deleteTag#${i}">
         <span class="badge d-flex align-items-center p-1 pe-2 text-secondary-emphasis bg-light-subtle border border-dark-subtle rounded">
@@ -46,20 +49,21 @@ function addStyle() {
           ${str}
           </div>
           &nbsp&nbsp
-          <svg class="bi" width="12" height="12" id="delSvg#${components}" onclick="delSvgToLi(this.id)">
+          <svg class="bi" width="12" height="12" id="delSvg#${fakeComponents}" onclick="delSvgToLi(this.id)">
             <use xlink:href="#x-circle-fill" />
           </svg>
         </span>
       </li>
     `
 
-  tagList4.insertAdjacentHTML('beforeend', li);
-  components++;
+  tagList10.insertAdjacentHTML('beforeend', li);
   getFullText()
-  return li
+  }
+  else{
+    alert("You may only use select one image style");
+  }
+
 }
-
-
 
 
 function addTag() {
@@ -96,34 +100,46 @@ function addTag() {
 
     `
     tagListNum = Math.floor(components/4)
-    if (tagListNum == 0){
-    tagList0.insertAdjacentHTML('beforeend', li);
-    } 
-    else if (tagListNum == 1){
-      tagList1.insertAdjacentHTML('beforeend', li);
-    }
-    else if (tagListNum == 2){
-      tagList2.insertAdjacentHTML('beforeend', li);
-    }
+    id = `tagList${tagListNum}`
+    console.log(id)
+    
+    elem = document.getElementById(id)
+    elem.insertAdjacentHTML('beforeend', li);
+
     components += 1
+    getFullText()
+    
   }
-  getFullText()
+  
   console.log(components);
 }
 
+// function selectedStyle(id) {
+//   alert(id);
+//   elem = document.getElementById(id)
+//   alert(elem.id);
+//   elem.parentNode.classList.add("selectedComponent");
+
+// }
+
 function createUl(text){
-
-  addInput(text);
-  addTag();
-
+  tagListNum = Math.floor(components/4)
+  if (tagListNum >= 10){
+    alert("You may only have 10 elements at the maximum.");
+  }
+  else{
+    addInput(text);
+    addTag();
+  }
+  
 }
 
 // components -> global variable
 function addInput(text) { 
   li =
     `
-  <li class="xs-2 col-sm-2 px-1">
-      <input id="tag#${components}" 
+  <li class="xs-2 col-sm-4 px-1">
+      <input id="tag#${components}"  
              value="${text}" 
              class="form-control textInput component" 
              placeholder=${text}
@@ -131,22 +147,22 @@ function addInput(text) {
   </li>
   `
   tagListNum = Math.floor(components/4)
-  if (tagListNum == 0){
-  tagList0.insertAdjacentHTML('beforeend', li);
-  } 
-  else if (tagListNum == 1){
-    tagList1.insertAdjacentHTML('beforeend', li);
-  }
-  else if (tagListNum == 2){
-    tagList2.insertAdjacentHTML('beforeend', li);
-  }
+
+    id = `tagList${tagListNum}`
+    console.log(id)
   
-  li = document.getElementById(`tag#${components}`)
-  const inputHandler = function (e) { // TODO: know what it means
-    getFullText()
-  }
-  li.addEventListener('input', inputHandler)
-  components += 1
+    // tagList = document.getElementbyId(id);
+    // tagList.insertAdjacentHTML('beforeend', li);
+    elem = document.getElementById(id)
+    elem.insertAdjacentHTML('beforeend', li);
+    
+    li = document.getElementById(`tag#${components}`)
+    const inputHandler = function (e) { // TODO: know what it means
+      getFullText()
+    }
+    li.addEventListener('input', inputHandler)
+    components += 1
+
 }
 
 function changeText(tagIdx, cfmIdx, text) {
@@ -172,10 +188,12 @@ function changeText(tagIdx, cfmIdx, text) {
   getFullText()
 }
 
-function changeThumbnail(tagIdx, cfmIdx, text) {
-  tagIdx = parseInt(tagIdx.split("#")[1])
-  id = `thumbnail#${tagIdx}`
-  img = document.getElementById(id)
+function changeThumbnail(thisId, cfmIdx, text) { //tagIdx is the component 
+  componentIdx = parseInt(thisId.split("#")[1])
+  console.log(componentIdx)
+
+  id = `thumbnail#${componentIdx}`
+  img = document.getElementById(id) // get the upper image, not the one clicking on
   if (cfmIdx == 0) {
     category = "color"
   } else if (cfmIdx == 1) {
@@ -186,6 +204,16 @@ function changeThumbnail(tagIdx, cfmIdx, text) {
     category = "render"
   }
   img.src = `img/${category}/${text}.png`
+
+  cardIdx = parseInt(thisId.split("#")[2])
+  console.log(cardIdx)
+
+  id = `Card#${cardIdx}`
+  console.log(id)
+
+  // thatCard = document.getElementById(id)
+  document.getElementById(id).classList.toggle("selectedComponent");
+  
 }
 
 const colorList = ['maroon', 'plum', 'purple', 'violet', 'lavender', 'pink', 'mauve',
@@ -208,7 +236,8 @@ function getFullText() {
 
   for (var i = 0; i < ll.length; i++) {
     ele = ll[i]
-    if (ele.id.startsWith("textInput#")) {
+    let tagName = ele.tagName;
+    if (tagName === "INPUT") {
       eleText = ele.value
     } else {
       eleText = ele.innerText;
@@ -260,7 +289,7 @@ function addColor(tagIdx, cfmIdx) {
     <div class="col-sm-1 p-0 m-2">
       <div class="card">
         <img src="img/${pane}/${list[i]}.png" class="card-img" alt="img" style = "height:150px">
-        <div id="changeText#${tagIdx}" 
+        <div id="changeText#${tagIdx}Card#${i}" 
              onclick="changeText(this.id, ${cfmIdx},'${list[i]}'); changeThumbnail(this.id, ${cfmIdx}, '${list[i]}')" 
              class="card-img-overlay align-items-center d-flex justify-content-center">
           <p class="card-text text-center">${initialCap}</p>
@@ -273,7 +302,7 @@ function addColor(tagIdx, cfmIdx) {
     <div class="col-sm-2 p-0 m-2">
       <div class="card">
         <img src="img/${pane}/${list[i]}.png" class="card-img" alt="img" style = "height:150px">
-        <div id="changeText#${tagIdx}" 
+        <div id="changeText#${tagIdx}Card#${i}" 
              onclick="changeText(this.id, ${cfmIdx},'${list[i]}'); changeThumbnail(this.id, ${cfmIdx}, '${list[i]}')" 
              class="card-img-overlay align-items-center d-flex justify-content-center">
           <p class="card-text text-center">${initialCap}</p>
@@ -337,6 +366,7 @@ function showImg() {
 
 }
 
+
 function removeAll() {
   document.getElementById("colorText").innerHTML = "";
   document.getElementById("colorStuff").innerHTML = "";
@@ -350,16 +380,36 @@ function removeAll() {
   document.getElementById("renderText").innerHTML = "";
   document.getElementById("renderStuff").innerHTML = "";
 
-  tags = document.getElementsByClassName("deleteTag")
-  while (tags.length > 0) {
-    tags[0].parentNode.remove()
-  }
+  const scriptHTML = `
+  <ul class="navbar-nav" id="tagList0">
+          </ul>
+          <ul class="navbar-nav" id="tagList1">
+          </ul>
+          <ul class="navbar-nav" id="tagList2">
+          </ul>
+          <ul class="navbar-nav" id="tagList3">
+          </ul>
+          <ul class="navbar-nav" id="tagList4">
+          </ul>
+          <ul class="navbar-nav" id="tagList5">
+          </ul>
+          <ul class="navbar-nav" id="tagList6">
+          </ul>
+          <ul class="navbar-nav" id="tagList7">
+          </ul>
+          <ul class="navbar-nav" id="tagList8">
+          </ul>
+          <ul class="navbar-nav" id="tagList9">
+          </ul>
+          <ul class="navbar-nav" id="tagList10">
+          </ul>
 
-  tags = document.getElementsByClassName("textInput")
-  while (tags.length > 0) {
-    tags[0].parentNode.remove()
-  }
+  `;
+  const main = document.getElementById('navbarCollapse');
   
+  main.innerHTML = scriptHTML;
+  // document.getElementById("navbarCollapse").innerHTML = ""
+
   components = 0
   getFullText()
 }

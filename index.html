@@ -130,11 +130,11 @@
             <li><a class="dropdown-item" onclick="removeAll(), createUl('An office chair'),
                 createUl('with back in'),createUl('with legs in '),addStyle()">
                 Office Chair</a>
-            <li><a class="dropdown-item" onclick="removeAll(), addInput('An electronic toothbrush'),addTag(), 
-                addInput('with handle in'),addTag(), addStyle()">
+            <li><a class="dropdown-item" onclick="removeAll(), createUl('An electronic toothbrush'), 
+                createUl('with handle in'),addStyle()">
                 Electronic Toothbrush</a>
-            <li><a class="dropdown-item" onclick="removeAll(),addInput('A backpack'),addTag(), 
-              addInput('with straps in'),addTag(),addStyle()">
+            <li><a class="dropdown-item" onclick="removeAll(),createUl('A backpack'),
+              createUl('with straps in'),addStyle()">
                 Backpack</a>
               <div class="dropdown-divider"></div>
             <li><a class="dropdown-item" onclick="removeAll()">Clear</a>
@@ -144,6 +144,7 @@
 
 
         <div class="collapse navbar-collapse flex-column" id="navbarCollapse">
+
           <ul class="navbar-nav" id="tagList0">
           </ul>
           <ul class="navbar-nav" id="tagList1">
@@ -154,14 +155,26 @@
           </ul>
           <ul class="navbar-nav" id="tagList4">
           </ul>
+          <ul class="navbar-nav" id="tagList5">
+          </ul>
+          <ul class="navbar-nav" id="tagList6">
+          </ul>
+          <ul class="navbar-nav" id="tagList7">
+          </ul>
+          <ul class="navbar-nav" id="tagList8">
+          </ul>
+          <ul class="navbar-nav" id="tagList9">
+          </ul>
+          <ul class="navbar-nav" id="tagList10">
+          </ul>
 
         </div>
 
         <div class="nav-item dropdown mx-2">
           <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Customize</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" onclick="addInput(' '), addTag()">Add Component</a></li>
-            <li><a class="dropdown-item" onclick="addInput('')">Add Input Box</a></li>
+            <li><a class="dropdown-item" onclick="createUl('element')">Add Component</a></li>
+            <!-- <li><a class="dropdown-item" onclick="addInput('')">Add Input Box</a></li> -->
             <li><a class="dropdown-item" onclick="addStyle()"> Add Image Style</a></li>
           </ul>
         </div>
