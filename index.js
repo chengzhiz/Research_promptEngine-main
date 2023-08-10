@@ -184,7 +184,6 @@ function changeText(tagIdx, cfmIdx, text) {
     text = text + " style."
   }
   document.getElementById(id1).innerHTML = text1  // change the tag text
-
   getFullText()
 }
 
@@ -205,14 +204,33 @@ function changeThumbnail(thisId, cfmIdx, text) { //tagIdx is the component
   }
   img.src = `img/${category}/${text}.png`
 
+  // ll = document.getElementById("card#")
+
+  // for (var i = 0; i < ll.length; i++) {
+    
+  //   document.getElementById(ll[i].id).classList.remove("selectedComponent");
+  // }
+
+  const collection = document.getElementsByClassName("selectedComponent");
+  for (let i = 0; i < collection.length; i++) {
+  collection[i].classList.toggle("selectedComponent");
+  }
+
   cardIdx = parseInt(thisId.split("#")[2])
   console.log(cardIdx)
 
-  id = `Card#${cardIdx}`
+  id = `card#${cardIdx}`
   console.log(id)
-
-  // thatCard = document.getElementById(id)
   document.getElementById(id).classList.toggle("selectedComponent");
+
+  // var element = document.getElementsByClassName("selectedComponent") 
+  // if (element != null){
+  //   elem.classList.toggle("selectedComponent");
+  // }
+
+  // document.getElementsByClassName("selectedComponent").classList.toggle("selectedComponent");
+
+
   
 }
 
@@ -288,7 +306,9 @@ function addColor(tagIdx, cfmIdx) {
     
     <div class="col-sm-1 p-0 m-2">
       <div class="card">
-        <img src="img/${pane}/${list[i]}.png" class="card-img" alt="img" style = "height:150px">
+
+        <img src="img/${pane}/${list[i]}.png" id="card#${i}" class="card-img" alt="img" style = "height:150px">
+
         <div id="changeText#${tagIdx}Card#${i}" 
              onclick="changeText(this.id, ${cfmIdx},'${list[i]}'); changeThumbnail(this.id, ${cfmIdx}, '${list[i]}')" 
              class="card-img-overlay align-items-center d-flex justify-content-center">
