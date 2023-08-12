@@ -112,6 +112,12 @@ function addTag() {
     getFullText()
     
   }
+
+  text = 
+    `
+     <p> with </p>
+    `
+  elem.insertAdjacentHTML('beforeend', text);
   
   console.log(components);
 }
@@ -165,15 +171,13 @@ function createUl(text){
 function addInput(text) { 
   li =
     `
-  <li class="xs-2 col-sm-4 px-1">
-      <span>with </span>
-      <input id="tag#${components}"  
-             value="${text}" 
-             class="form-control textInput component" 
-             placeholder=${text}
-             >
-      <span>in </span>
-  </li>
+    <li class="xs-2 col-sm-4 px-1">
+        <input id="tag#${components}"  
+              value="${text}" 
+              class="form-control textInput component" 
+              >
+    </li>
+   <p>&nbsp  in &nbsp </p>
   `
   tagListNum = Math.floor(components/4)
 
@@ -183,6 +187,7 @@ function addInput(text) {
     elem = document.getElementById(id)
     elem.insertAdjacentHTML('beforeend', li);
     
+
     li = document.getElementById(`tag#${components}`)
     const inputHandler = function (e) { // TODO: know what it means
       getFullText()
@@ -317,9 +322,7 @@ function addColor(tagIdx, cfmIdx) {
     
     <div class="col-sm-1 p-0 m-2">
       <div class="card">
-
         <img src="img/${pane}/${list[i]}.png" id="card#${i}" class="card-img" alt="img" style = "height:150px">
-
         <div id="changeText#${tagIdx}Card#${i}" 
              onclick="changeText(this.id, ${cfmIdx},'${list[i]}'); changeThumbnail(this.id, ${cfmIdx}, '${list[i]}')" 
              class="card-img-overlay align-items-center d-flex justify-content-center">
@@ -425,6 +428,8 @@ function removeAll() {
 
   document.getElementById("renderText").innerHTML = "";
   document.getElementById("renderStuff").innerHTML = "";
+
+  // align-items-center justify-content-center
 
   const scriptHTML = `
   <ul class="navbar-nav" id="tagList0">

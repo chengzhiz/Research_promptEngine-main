@@ -359,4 +359,5 @@ body {
   opacity: 1;
   /* transform: scale3d(1.07, 1.07, 1); */
   box-shadow: 2px 2px;
+  border-width: 3px 0;
 }
