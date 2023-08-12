@@ -42,10 +42,10 @@ function addStyle() {
   if (element == null) {
     li =
     `
-      <li class="nav-item deleteTag" id="deleteTag#${i}">
-        <span class="badge d-flex align-items-center p-1 pe-2 text-secondary-emphasis bg-light-subtle border border-dark-subtle rounded">
+      <li class="nav-item deleteTag">
+        <span class="badge d-flex align-items-center p-1 pe-2 text-secondary-emphasis bg-light-subtle border border-dark-subtle rounded" id="deleteTag#${i}">
           <img class="rounded-circle me-1" id="thumbnail#${i}" width="18" height="18" src="img/default_${str}.png" alt="">
-          <div onclick="${oc}" id="tag#${i}" class="component">
+          <div onclick="${oc}; highlightCard(${i})" id="tag#${i}" class="component">
           ${str}
           </div>
           &nbsp&nbsp
@@ -73,14 +73,17 @@ function addTag() {
     if (i % 3 == 0) { // the sequence of adding elements using the loop
       str = "color"
       oc = `addColor(${components}, 0)`
+      placeholder = "white"
     }
     else if (i % 3 == 1) { 
       str = "finish"
       oc = `addColor(${components}, 2)`
+      placeholder = "gloss"
     }
     else if (i % 3 == 2) {
       str = "material"
       oc = `addColor(${components}, 1)`
+      placeholder = "plastic"
     }
     li =
       //tag item display below
@@ -88,8 +91,8 @@ function addTag() {
       <li class="nav-item deleteTag collapse navbar-collapse" > 
         <span class="badge d-flex align-items-center text-secondary-emphasis bg-light-subtle border border-dark-subtle rounded" id="deleteTag#${components}">
           <img class="rounded-circle me-1" id="thumbnail#${components}" width="18" height="18" src="img/default_${str}.png" alt="">
-          <div onclick="${oc}" id="tag#${components}" class= "component"> 
-            ${str}
+          <div onclick="${oc}; highlightCard(${components})" id="tag#${components}" class= "component"> 
+            ${placeholder}
           </div>
           &nbsp&nbsp
           <svg class="bi" width="12" height="12" id="delSvg#${components}" onclick="delSvgToLi(this.id)">
@@ -97,7 +100,6 @@ function addTag() {
           </svg>
         </span>
       </li>
-
     `
     tagListNum = Math.floor(components/4)
     id = `tagList${tagListNum}`
@@ -112,6 +114,31 @@ function addTag() {
   }
   
   console.log(components);
+}
+
+function highlightCard(tagId){
+
+  tagIdx = parseInt(tagId)
+  console.log(tagIdx)
+
+  cardId = `deleteTag#${tagIdx}`
+  card = document.getElementById(cardId) // get the upper image, not the one clicking on
+
+  const collection = document.getElementsByClassName("badge");
+  for (let i = 0; i < collection.length; i++) {
+  // collection[i].classList.remove("selectedTag");
+  collection[i].classList.remove("bg-dark-subtle");
+  collection[i].classList.add("bg-secondary");
+  collection[i].classList.remove("border-secondary");
+  collection[i].classList.add("border-dark-subtle");
+  } //firstly, remove all selectedTag class from the full list
+
+  // document.getElementById(cardId).classList.toggle("selectedTag");
+  document.getElementById(cardId).classList.remove("bg-secondary");
+  document.getElementById(cardId).classList.add("bg-dark-subtle");
+  document.getElementById(cardId).classList.remove("border-dark-subtle");
+  document.getElementById(cardId).classList.add("border-secondary");
+
 }
 
 // function selectedStyle(id) {
@@ -139,11 +166,13 @@ function addInput(text) {
   li =
     `
   <li class="xs-2 col-sm-4 px-1">
+      <span>with </span>
       <input id="tag#${components}"  
              value="${text}" 
              class="form-control textInput component" 
              placeholder=${text}
              >
+      <span>in </span>
   </li>
   `
   tagListNum = Math.floor(components/4)
@@ -151,8 +180,6 @@ function addInput(text) {
     id = `tagList${tagListNum}`
     console.log(id)
   
-    // tagList = document.getElementbyId(id);
-    // tagList.insertAdjacentHTML('beforeend', li);
     elem = document.getElementById(id)
     elem.insertAdjacentHTML('beforeend', li);
     
@@ -204,13 +231,6 @@ function changeThumbnail(thisId, cfmIdx, text) { //tagIdx is the component
   }
   img.src = `img/${category}/${text}.png`
 
-  // ll = document.getElementById("card#")
-
-  // for (var i = 0; i < ll.length; i++) {
-    
-  //   document.getElementById(ll[i].id).classList.remove("selectedComponent");
-  // }
-
   const collection = document.getElementsByClassName("selectedComponent");
   for (let i = 0; i < collection.length; i++) {
   collection[i].classList.toggle("selectedComponent");
@@ -223,15 +243,6 @@ function changeThumbnail(thisId, cfmIdx, text) { //tagIdx is the component
   console.log(id)
   document.getElementById(id).classList.toggle("selectedComponent");
 
-  // var element = document.getElementsByClassName("selectedComponent") 
-  // if (element != null){
-  //   elem.classList.toggle("selectedComponent");
-  // }
-
-  // document.getElementsByClassName("selectedComponent").classList.toggle("selectedComponent");
-
-
-  
 }
 
 const colorList = ['maroon', 'plum', 'purple', 'violet', 'lavender', 'pink', 'mauve',
@@ -321,7 +332,7 @@ function addColor(tagIdx, cfmIdx) {
     s = `
     <div class="col-sm-2 p-0 m-2">
       <div class="card">
-        <img src="img/${pane}/${list[i]}.png" class="card-img" alt="img" style = "height:150px">
+        <img src="img/${pane}/${list[i]}.png" id="card#${i}" class="card-img" alt="img" style = "height:150px">
         <div id="changeText#${tagIdx}Card#${i}" 
              onclick="changeText(this.id, ${cfmIdx},'${list[i]}'); changeThumbnail(this.id, ${cfmIdx}, '${list[i]}')" 
              class="card-img-overlay align-items-center d-flex justify-content-center">
@@ -340,6 +351,7 @@ function addColor(tagIdx, cfmIdx) {
 
 
 function showImg() {
+
   ms = document.getElementById("materialStuff");
   fi = document.getElementById("finishStuff")
   co = document.getElementById("colorStuff")
@@ -350,7 +362,7 @@ function showImg() {
   ms.innerHTML = ""
 
   str = `
-<div class="row container mx-2">
+<div class="row container mx-2" id = "displayImg">
   <div class="col-sm-3 mb-3">
 
   <div class="card">
@@ -381,11 +393,25 @@ function showImg() {
 </div>
 
   `
-  // ms.insertAdjacentHTML('afterbegin', str);
-  re.innerHTML = str
 
+  str2 = `
+  <div class=" d-lg-flex col-sm justify-content-center">
+  <a href="#">
+    <button class="btn btn-primary btn-sm" onclick="confirmFinish()"> Finish Task </button>
+  </a>
+  </div>
+  
+  `
+  
+  re.innerHTML = str
+  renderStuff.insertAdjacentHTML('afterend', str2);
+
+  
 }
 
+function confirmFinish(){
+  confirm("Finish this design task and leave the page");
+}
 
 function removeAll() {
   document.getElementById("colorText").innerHTML = "";
