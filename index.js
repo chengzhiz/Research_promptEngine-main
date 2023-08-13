@@ -207,8 +207,7 @@ function addInput(text) {
   tagListNum = Math.floor(components/4)
 
     id = `tagList${tagListNum}`
-    console.log(id)
-  
+
     elem = document.getElementById(id)
     elem.insertAdjacentHTML('beforeend', li);
     
@@ -245,7 +244,6 @@ function changeText(tagIdx, cfmIdx, text) {
 
 function changeThumbnail(thisId, cfmIdx, text) { //tagIdx is the component 
   componentIdx = parseInt(thisId.split("#")[1])
-  console.log(componentIdx)
 
   id = `thumbnail#${componentIdx}`
   img = document.getElementById(id) // get the upper image, not the one clicking on
@@ -307,15 +305,19 @@ function getFullText() {
       if (renderList.includes(eleText)){
         eleText = eleText + " style"
         part = `<span class = "wholeText"> [${eleText}] </span> .`
+
+        if(ele.parentNode.classList.contains("bg-dark-subtle")){
+          fullText.classList.remove("fw-bolder")
+          part = `<span class = "wholeText fw-bolder"> [${eleText}] </span> . `
+          
+        }
         
       }else if(CMFList.includes(eleText)){
         part = `<span class = "wholeText text-dark"> [${eleText}] </span> `
         if(ele.parentNode.classList.contains("bg-dark-subtle")){
-          fullText.classList.remove("text-primary")
-          part = `<span class = "wholeText text-primary"> [${eleText}] </span> `
+          fullText.classList.remove("fw-bolder")
+          part = `<span class = "wholeText fw-bolder"> [${eleText}] </span> `
           
-          // collection[i].classList.remove("bg-dark-subtle");
-          // collection[i].classList.add("bg-secondary");
         }
 
       }else if(prepList.includes(eleText)){
@@ -397,8 +399,18 @@ function addColor(tagIdx, cfmIdx) {
 
 }
 
+function checkAllSelected(){
+  let numb1 = document.getElementsByClassName("component").length;
+  let numb2 = document.getElementsByClassName("body-text-emphasis").length;
+    if(numb1 == numb2) {
+      generateImg();
+    }
+    else{
+      alert("Not all elements selected");
+    }
+}
 
-function showImg() {
+function generateImg() {
 
   ms = document.getElementById("materialStuff");
   fi = document.getElementById("finishStuff")
@@ -441,19 +453,7 @@ function showImg() {
 </div>
 
   `
-
-  str2 = `
-  <div class=" d-lg-flex col-sm justify-content-center">
-  <a href="#">
-    <button class="btn btn-primary btn-sm" onclick="confirmFinish()"> Finish Task </button>
-  </a>
-  </div>
-  
-  `
-  
   re.innerHTML = str
-  renderStuff.insertAdjacentHTML('afterend', str2);
-
   
 }
 

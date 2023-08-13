@@ -114,8 +114,17 @@
     </header>
   </div>
 
+  <div class="container-fluid px-5" id="timer">
+    <div class=" d-lg-flex col-sm py-3 justify-content-center">
+      <a href="#">
+        <button class="btn btn-secondary btn-bg" onclick="confirmFinish()"> Finish Task </button>
+      </a>
+    </div>
+
+  </div>
+
   <!-- flex-column -->
-  <div class="container-fluid p-0 my-5 py-5 px-5">
+  <div class="container-fluid p-0 my-2 py-4 px-5">
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary rounded">
       <div class="container-fluid " id="inputContainer">
@@ -182,7 +191,7 @@
 
         <div class=" d-lg-flex col-sm-auto justify-content-lg-end" id="generateButton">
           <a href="#">
-            <button class="btn btn-secondary btn-sm" onclick="showImg()"> Generate </button>
+            <button class="btn btn-secondary btn-sm" onclick="checkAllSelected()"> Generate </button>
           </a>
         </div>
 
