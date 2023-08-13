@@ -30,7 +30,7 @@ function delSvgToLi(clicked_id) {
   }
   checkTagListNull()
   // components -= 1
-  getFullText()
+  prevCommaToWith()
 }
 
 // only check tag list when delete element from the tag list
@@ -125,22 +125,37 @@ function addTag() {
     components += 1
     
   }
-  nextTagListNum = tagListNum + 1
-  nextId = `tagList${nextTagListNum}`
+  // nextTagListNum = tagListNum + 1
+  // nextId = `tagList${nextTagListNum}`
   // check whether they still have elements after or not
-
-  comma = 
-    `
-      <p class="component px-1 initialComma"> , </p>
-    `
-  elem.insertAdjacentHTML('beforeend', comma);
   
-  const collection = document.getElementsByClassName("initialComma");
-  for (let i = 0; i < collection.length -1; i++) {
-    collection[i].innerHTML = "with"
-  }
-  getFullText()
+  comma = 
+  `
+    <p class="component px-1 initialComma"> , </p>
+  `
+  elem.insertAdjacentHTML('beforeend', comma);
+  prevCommaToWith()
+
 }
+
+function prevCommaToWith(){
+
+    const collection = document.getElementsByClassName("initialComma");
+    for (let i = 0; i < collection.length; i++) {
+      if (!(i == (collection.length -1 ))){
+        collection[i].innerHTML = "with"
+      }else{
+        collection[i].innerHTML = ","
+      }      
+    }
+    console.log("changedLastCommaToWith")
+    getFullText()
+
+}
+
+
+
+
 
 function highlightCard(tagId){
 
@@ -394,9 +409,37 @@ function addColor(tagIdx, cfmIdx) {
     }
     str += s
   }
-  // ms.insertAdjacentHTML('afterbegin', str);
-  fi.innerHTML = str
 
+  // if (oneColStyle){
+  // s1 = `
+    
+  //   <div class="col-sm-1 p-0 m-2">
+  //     <div class="card">
+  //       <img src="img/color/aqua.png" id="card#${i}" class="card-img" alt="img" style = "height:150px">
+  //       <div id="changeText#${tagIdx}Card#${i}" 
+  //            onclick="changeText(this.id, ${cfmIdx},'${list[i]}'); changeThumbnail(this.id, ${cfmIdx}, '${list[i]}')" 
+  //            class="card-img-overlay align-items-center d-flex justify-content-center">
+  //         <input class="card-text text-center"> </input>
+  //       </div>
+  //     </div>
+  //   </div>
+  //   `
+  // }else{
+  // s1 = `
+  //     <div class="col-sm-1 p-0 m-2">
+  //     <div class="card">
+  //       <img src="img/color/aqua.png" id="card#${i}" class="card-img" alt="img" style = "height:150px">
+  //       <div id="changeText#${tagIdx}Card#${i}" 
+  //            onclick="changeText(this.id, ${cfmIdx},'${list[i]}'); changeThumbnail(this.id, ${cfmIdx}, '${list[i]}')" 
+  //            class="card-img-overlay align-items-center d-flex justify-content-center">
+  //           <input class="card-text text-center"> </input>
+  //       </div>
+  //     </div>
+  //   </div>
+  //   `
+  // }
+  // str += s1
+  fi.innerHTML = str
 }
 
 function checkAllSelected(){
@@ -406,7 +449,7 @@ function checkAllSelected(){
       generateImg();
     }
     else{
-      alert("Not all elements selected");
+      confirm("Not all elements are selected. Do you wish to proceed?");
     }
 }
 
