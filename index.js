@@ -28,8 +28,24 @@ function delSvgToLi(clicked_id) {
     ele = document.getElementById("renderText")
     ele.innerHTML = ""
   }
+  checkTagListNull()
   // components -= 1
   getFullText()
+}
+
+// only check tag list when delete element from the tag list
+function checkTagListNull(){
+  // check if deleteTag is inside the tagList,
+  // if not, empty the whole tagList
+  for (var i = 0; i < 10; i++) {
+    id = `tagList${i}`
+    elem = document.getElementById(id)
+    let numb = elem.getElementsByClassName("deleteTag").length;
+    if (numb == 0){
+      console.log("no delete tag")
+      elem.innerHTML = ""
+    }
+  }
 }
 
 
@@ -43,10 +59,10 @@ function addStyle() {
     li =
     `
       <li class="nav-item deleteTag">
-        <span class="badge d-flex align-items-center p-1 pe-2 text-secondary-emphasis bg-light-subtle border border-dark-subtle rounded" id="deleteTag#${i}">
+        <span class="badge d-flex align-items-center p-1 pe-2 text-body-tertiary bg-light-subtle border border-dark-subtle rounded" id="deleteTag#${i}">
           <img class="rounded-circle me-1" id="thumbnail#${i}" width="18" height="18" src="img/default_${str}.png" alt="">
           <div onclick="${oc}; highlightCard(${i})" id="tag#${i}" class="component">
-          ${str}
+          rendering
           </div>
           &nbsp&nbsp
           <svg class="bi" width="12" height="12" id="delSvg#${fakeComponents}" onclick="delSvgToLi(this.id)">
@@ -65,7 +81,6 @@ function addStyle() {
 
 }
 
-
 function addTag() {
   text = ""
   fullTagList = ""
@@ -73,23 +88,23 @@ function addTag() {
     if (i % 3 == 0) { // the sequence of adding elements using the loop
       str = "color"
       oc = `addColor(${components}, 0)`
-      placeholder = "white"
+      placeholder = "ivory"
     }
     else if (i % 3 == 1) { 
       str = "finish"
       oc = `addColor(${components}, 2)`
-      placeholder = "gloss"
+      placeholder = "high-gloss"
     }
     else if (i % 3 == 2) {
       str = "material"
       oc = `addColor(${components}, 1)`
-      placeholder = "plastic"
+      placeholder = "steel"
     }
     li =
       //tag item display below
       `
       <li class="nav-item deleteTag collapse navbar-collapse" > 
-        <span class="badge d-flex align-items-center text-secondary-emphasis bg-light-subtle border border-dark-subtle rounded" id="deleteTag#${components}">
+        <span class="badge d-flex align-items-center text-body-tertiary bg-light-subtle border border-dark-subtle rounded" id="deleteTag#${components}">
           <img class="rounded-circle me-1" id="thumbnail#${components}" width="18" height="18" src="img/default_${str}.png" alt="">
           <div onclick="${oc}; highlightCard(${components})" id="tag#${components}" class= "component"> 
             ${placeholder}
@@ -103,23 +118,28 @@ function addTag() {
     `
     tagListNum = Math.floor(components/4)
     id = `tagList${tagListNum}`
-    console.log(id)
     
     elem = document.getElementById(id)
     elem.insertAdjacentHTML('beforeend', li);
 
     components += 1
-    getFullText()
     
   }
+  nextTagListNum = tagListNum + 1
+  nextId = `tagList${nextTagListNum}`
+  // check whether they still have elements after or not
 
-  text = 
+  comma = 
     `
-     <p> with </p>
+      <p class="component px-1 initialComma"> , </p>
     `
-  elem.insertAdjacentHTML('beforeend', text);
+  elem.insertAdjacentHTML('beforeend', comma);
   
-  console.log(components);
+  const collection = document.getElementsByClassName("initialComma");
+  for (let i = 0; i < collection.length -1; i++) {
+    collection[i].innerHTML = "with"
+  }
+  getFullText()
 }
 
 function highlightCard(tagId){
@@ -142,8 +162,13 @@ function highlightCard(tagId){
   // document.getElementById(cardId).classList.toggle("selectedTag");
   document.getElementById(cardId).classList.remove("bg-secondary");
   document.getElementById(cardId).classList.add("bg-dark-subtle");
+
   document.getElementById(cardId).classList.remove("border-dark-subtle");
   document.getElementById(cardId).classList.add("border-secondary");
+  
+  document.getElementById(cardId).classList.remove("text-body-tertiary");
+  document.getElementById(cardId).classList.add("text-body-emphasis");
+
 
 }
 
@@ -164,7 +189,6 @@ function createUl(text){
     addInput(text);
     addTag();
   }
-  
 }
 
 // components -> global variable
@@ -177,7 +201,8 @@ function addInput(text) {
               class="form-control textInput component" 
               >
     </li>
-   <p>&nbsp  in &nbsp </p>
+    &nbsp
+   <p class="component px-1 in"> in</p>
   `
   tagListNum = Math.floor(components/4)
 
@@ -187,7 +212,6 @@ function addInput(text) {
     elem = document.getElementById(id)
     elem.insertAdjacentHTML('beforeend', li);
     
-
     li = document.getElementById(`tag#${components}`)
     const inputHandler = function (e) { // TODO: know what it means
       getFullText()
@@ -213,7 +237,7 @@ function changeText(tagIdx, cfmIdx, text) {
     text = text
   } else {
     id = "renderText"
-    text = text + " style."
+    text = text + "style."
   }
   document.getElementById(id1).innerHTML = text1  // change the tag text
   getFullText()
@@ -253,7 +277,7 @@ function changeThumbnail(thisId, cfmIdx, text) { //tagIdx is the component
 const colorList = ['maroon', 'plum', 'purple', 'violet', 'lavender', 'pink', 'mauve',
   'lilac', 'grey', 'brown', 'black', 'indigo', 'blue', 'teal', 'green',
   'aqua', 'olive', 'lime', 'red', 'orange', 'salmon', 'peach', 'mustard',
-  'ochre', 'yellow', 'cream']
+  'ochre', 'yellow', 'cream', 'white']
 const materialList = ['leather', 'wood', 'canvas', 'metal', 'rubber', 'diamond', 'plastic',
   'marble', 'concrete', 'gold', 'silver', 'aluminum', 'cloth', 'ceramic', 'liquid']
 const finishList = ['gloss', 'high gloss', 'matt', 'brushed', 'polished', 'satin', 'antique',
@@ -261,6 +285,9 @@ const finishList = ['gloss', 'high gloss', 'matt', 'brushed', 'polished', 'satin
 const renderList = ['3d rendering', 'watercolor', 'oil paint', 'vector art', 'drawn sketch',
   'photorealistic', 'digital art', 'patent drawing', 'cinematic', 'anmie', 'isometric 3d', 'ikea manual',
   'cutaway', 'lowpoly']
+const prepList = [ ',' , 'with', 'in', '&nbsp;in']
+
+const CMFList = colorList.concat(materialList, finishList);
 
 
 function getFullText() {
@@ -270,23 +297,41 @@ function getFullText() {
 
   for (var i = 0; i < ll.length; i++) {
     ele = ll[i]
+
     let tagName = ele.tagName;
     if (tagName === "INPUT") {
       eleText = ele.value
+      part = `<span class = "wholeText text-secondary"> ${eleText} </span>`
     } else {
       eleText = ele.innerText;
       if (renderList.includes(eleText)){
-        console.log(renderList.includes(eleText))
-          eleText = ", " + eleText + " style"
+        eleText = eleText + " style"
+        part = `<span class = "wholeText"> [${eleText}] </span> .`
+        
+      }else if(CMFList.includes(eleText)){
+        part = `<span class = "wholeText text-dark"> [${eleText}] </span> `
+        if(ele.parentNode.classList.contains("bg-dark-subtle")){
+          fullText.classList.remove("text-primary")
+          part = `<span class = "wholeText text-primary"> [${eleText}] </span> `
+          
+          // collection[i].classList.remove("bg-dark-subtle");
+          // collection[i].classList.add("bg-secondary");
+        }
+
+      }else if(prepList.includes(eleText)){
+        part = `&nbsp<span class = "wholeText text-secondary"> ${eleText} </span> `
+      }else{
+        part = `<span class = "wholeText text-secondary">[]</span> `
       }
+      
     }
-    wholeText = wholeText + " " + eleText
-  }
-  document.getElementById("fullText").innerHTML = wholeText
-}
+    wholeText = wholeText + part
+    }
+    document.getElementById("fullText").innerHTML = wholeText  
+  } 
 
 function addColor(tagIdx, cfmIdx) {  
-  // show the card at the bottom of the documentssssssss
+  // show the card at the bottom of the documents
   ms = document.getElementById("materialStuff");
   fi = document.getElementById("finishStuff") // why put in this label?
   co = document.getElementById("colorStuff")

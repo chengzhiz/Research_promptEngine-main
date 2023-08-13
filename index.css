@@ -361,3 +361,7 @@ body {
   box-shadow: 2px 2px;
   border-width: 3px 0;
 }
+
+.wholeText {
+  display: inline-block;
+}
