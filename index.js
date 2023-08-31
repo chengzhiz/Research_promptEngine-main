@@ -227,9 +227,11 @@ function addInput(text) {
     elem.insertAdjacentHTML('beforeend', li);
     
     li = document.getElementById(`tag#${components}`)
+
     const inputHandler = function (e) { // TODO: know what it means
       getFullText()
     }
+
     li.addEventListener('input', inputHandler)
     components += 1
 
@@ -375,6 +377,7 @@ function addColor(tagIdx, cfmIdx) {
   }
 
   str = ""
+
   for (let i = 0; i < list.length; i++) {
     initialCap = list[i].charAt(0).toUpperCase() + list[i].slice(1)
     if (oneColStyle){
@@ -410,35 +413,45 @@ function addColor(tagIdx, cfmIdx) {
     str += s
   }
 
-  // if (oneColStyle){
-  // s1 = `
+  i = list.length
+      
+  if (oneColStyle){
+    sCustomizable = `
+      <div class="col-sm-1 p-0 m-2">
+        <div class="card">
+          <img src="img/color/white.png" id="card#${i}" class="card-img" alt="img" style = "height:150px">
+          <div id="changeText#${tagIdx}Card#${i}" 
+               onclick="changeText(this.id, ${cfmIdx},'customize'); changeThumbnail(this.id, 0, 'white')" 
+               class="card-img-overlay align-items-center d-flex justify-content-center">
+            <input class="card-text text-center textInput" id = "customizeComp"> </input>
+          </div>
+        </div>
+      </div>
+      `
+    }else{
+    sCustomizable = `
+        <div class="col-sm-2 p-0 m-2">
+        <div class="card">
+          <img src="img/color/white.png" id="card#${i}" class="card-img" alt="img" style = "height:150px">
+          <div id="changeText#${tagIdx}Card#${i}" 
+               onclick="changeText(this.id, ${cfmIdx},'customize'); changeThumbnail(this.id, 0, 'white')" 
+               class="card-img-overlay align-items-center d-flex justify-content-center">
+              <input class="card-text text-center text-input" id = "customizeComp"> </input>
+          </div>
+        </div>
+      </div>
+      `
+    }
+
+    // li = document.getElementById(`changeText#${tagIdx}Card#${i}`)
+
+    // const inputHandler = function (e) { // TODO: know what it means
+    //   getFullText()
+    // }
     
-  //   <div class="col-sm-1 p-0 m-2">
-  //     <div class="card">
-  //       <img src="img/color/aqua.png" id="card#${i}" class="card-img" alt="img" style = "height:150px">
-  //       <div id="changeText#${tagIdx}Card#${i}" 
-  //            onclick="changeText(this.id, ${cfmIdx},'${list[i]}'); changeThumbnail(this.id, ${cfmIdx}, '${list[i]}')" 
-  //            class="card-img-overlay align-items-center d-flex justify-content-center">
-  //         <input class="card-text text-center"> </input>
-  //       </div>
-  //     </div>
-  //   </div>
-  //   `
-  // }else{
-  // s1 = `
-  //     <div class="col-sm-1 p-0 m-2">
-  //     <div class="card">
-  //       <img src="img/color/aqua.png" id="card#${i}" class="card-img" alt="img" style = "height:150px">
-  //       <div id="changeText#${tagIdx}Card#${i}" 
-  //            onclick="changeText(this.id, ${cfmIdx},'${list[i]}'); changeThumbnail(this.id, ${cfmIdx}, '${list[i]}')" 
-  //            class="card-img-overlay align-items-center d-flex justify-content-center">
-  //           <input class="card-text text-center"> </input>
-  //       </div>
-  //     </div>
-  //   </div>
-  //   `
-  // }
-  // str += s1
+    // customize.addEventListener('input', inputHandler)
+    
+  str += sCustomizable
   fi.innerHTML = str
 }
 
