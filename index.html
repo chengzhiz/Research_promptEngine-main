@@ -114,101 +114,47 @@
     </header>
   </div>
 
-  <div class="container-fluid px-5" id="timer">
+  <div class="container-fluid" id="timer">
     <div class=" d-lg-flex col-sm py-3 justify-content-center">
+      <div class="py-2">
+        <p class="font-weight-bold">Time: 00:00:00 &nbsp&nbsp </p>
+      </div>
       <a href="#">
         <button class="btn btn-secondary btn-bg" onclick="confirmFinish()"> Finish Task </button>
       </a>
     </div>
+  </div>
+  </div>
 
+
+  <div class="container-fluid p-0 px-5 py-0" id="SampleText">
+    <div class="d-lg-flex col-sm justify-content-left mx-2">
+      <div>
+        <p><strong> Sample prompts: </strong>
+        <p>
+        <div>
+          &nbsp&nbsp A flower-patterned mug in cream gloss ceramic
+          with handle in wood, 3d rendering style.
+        </div>
+        <div>
+          &nbsp&nbsp A backpack for travellers in grey canvas with straps
+          in white padded mesh, cinematic style.
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- flex-column -->
   <div class="container-fluid p-0 my-2 py-4 px-5">
 
-    <nav class="navbar navbar-expand-lg bg-body-tertiary rounded">
-      <div class="container-fluid " id="inputContainer">
 
-        <div class="nav-item dropdown mx-2">
-          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Product</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" onclick="removeAll(); addInput('A mug')">
-                Mug (pilot) </a>
-            </li>
-            <li><a class="dropdown-item" onclick="removeAll(); addInput('A watch'); addTag() 
-                addInput('straps'); addTag(); addStyle();">
-                1. Watch</a>
-            </li>
-            <li><a class="dropdown-item" onclick="removeAll(); addInput('A watch'); addTag() 
-                addInput('straps'); addTag(); addStyle();">
-                2. Coffee maker</a>
-            </li>
-            <li><a class="dropdown-item" onclick="removeAll(), createUl('An office chair'),
-                createUl('back'),createUl('legs'),addStyle()">
-                3. Office Chair</a>
-            <li><a class="dropdown-item" onclick="removeAll(), createUl('An office chair'),
-                createUl('back'),createUl('legs'),addStyle()">
-                4. Trash Bin</a>
-            <li><a class="dropdown-item" onclick="removeAll(), createUl('An office chair'),
-                createUl('back'),createUl('legs'),addStyle()">
-                5. Office Chair</a>
-            <li><a class="dropdown-item" onclick="removeAll(), createUl('An office chair'),
-                createUl('back'),createUl('legs'),addStyle()">
-                6. Suitcase</a>
-            <li><a class="dropdown-item" onclick="removeAll(), createUl('An office chair'),
-                createUl('back'),createUl('legs'),addStyle()">
-                7. Desk lamp</a>
-            <li><a class="dropdown-item" onclick="removeAll(), createUl('An office chair'),
-                createUl('back'),createUl('legs'),addStyle()">
-                8. Jewelry box</a>
-            <li><a class="dropdown-item" onclick="removeAll(), createUl('An electronic toothbrush'), 
-                createUl('handle'),addStyle()">
-                9. Electronic Toothbrush</a>
-            <li><a class="dropdown-item" onclick="removeAll(),createUl('A backpack'),
-              createUl('straps'),addStyle()">
-                Backpack</a>
-              <div class="dropdown-divider"></div>
-            <li><a class="dropdown-item" onclick="removeAll()">Clear</a>
-            </li>
-          </ul>
-        </div>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary rounded">
+      <div class="container-fluid" id="inputContainer">
 
         <!-- flex-column: have several row effect -->
 
-        <div class="collapse navbar-collapse flex-column align-content-start" id="navbarCollapse">
-
-          <ul class="navbar-nav" id="tagList0">
-          </ul>
-          <ul class="navbar-nav" id="tagList1">
-          </ul>
-          <ul class="navbar-nav" id="tagList2">
-          </ul>
-          <ul class="navbar-nav" id="tagList3">
-          </ul>
-          <ul class="navbar-nav" id="tagList4">
-          </ul>
-          <ul class="navbar-nav" id="tagList5">
-          </ul>
-          <ul class="navbar-nav" id="tagList6">
-          </ul>
-          <ul class="navbar-nav" id="tagList7">
-          </ul>
-          <ul class="navbar-nav" id="tagList8">
-          </ul>
-          <ul class="navbar-nav" id="tagList9">
-          </ul>
-          <ul class="navbar-nav" id="tagList10">
-          </ul>
-
-        </div>
-
-        <div class="nav-item dropdown mx-2">
-          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Customize</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" onclick="createUl('element name')">Add Component</a></li>
-            <!-- <li><a class="dropdown-item" onclick="addInput('')">Add Input Box</a></li> -->
-            <li><a class="dropdown-item" onclick="addStyle()"> Add Image Style</a></li>
-          </ul>
+        <div class="collapse navbar-collapse flex-column align-content-left mx-2">
+          <input style="width: 100%">
         </div>
 
         <div class=" d-lg-flex col-sm-auto justify-content-lg-end" id="generateButton">
@@ -221,11 +167,8 @@
     </nav>
 
 
-
     <div class="container-fluid mb-3">
       <id="inline-text">
-        <span class="text-muted" id="inline-text"> Suggested prompt: &nbsp
-        </span>
         <span class="font-weight-bold" id="promptText"></span>
         <span class="font-weight-bold" id="colorText"></span>
         <span class="font-weight-bold" id="finishText"></span>
@@ -242,6 +185,7 @@
     </div>
     <div class="row container mx-2" id="renderStuff">
     </div>
+
 
   </div>
 

@@ -88,17 +88,17 @@ function addTag() {
     if (i % 3 == 0) { // the sequence of adding elements using the loop
       str = "color"
       oc = `addColor(${components}, 0)`
-      placeholder = "ivory"
+      placeholder = "color"
     }
     else if (i % 3 == 1) { 
       str = "finish"
       oc = `addColor(${components}, 2)`
-      placeholder = "high-gloss"
+      placeholder = "material"
     }
     else if (i % 3 == 2) {
       str = "material"
       oc = `addColor(${components}, 1)`
-      placeholder = "steel"
+      placeholder = "finish"
     }
     li =
       //tag item display below
@@ -419,9 +419,9 @@ function addColor(tagIdx, cfmIdx) {
     sCustomizable = `
       <div class="col-sm-1 p-0 m-2">
         <div class="card">
-          <img src="img/color/white.png" id="card#${i}" class="card-img" alt="img" style = "height:150px">
+          <img src="img/color/customize.png" id="card#${i}" class="card-img" alt="img" style = "height:150px">
           <div id="changeText#${tagIdx}Card#${i}" 
-               onclick="changeText(this.id, ${cfmIdx},'customize'); changeThumbnail(this.id, 0, 'white')" 
+               onclick="changeText(this.id, ${cfmIdx},'customize'); changeThumbnail(this.id, 0, 'customize')" 
                class="card-img-overlay align-items-center d-flex justify-content-center">
             <input class="card-text text-center textInput" id = "customizeComp"> </input>
           </div>
@@ -432,9 +432,9 @@ function addColor(tagIdx, cfmIdx) {
     sCustomizable = `
         <div class="col-sm-2 p-0 m-2">
         <div class="card">
-          <img src="img/color/white.png" id="card#${i}" class="card-img" alt="img" style = "height:150px">
+          <img src="img/color/customize.png" id="card#${i}" class="card-img" alt="img" style = "height:150px">
           <div id="changeText#${tagIdx}Card#${i}" 
-               onclick="changeText(this.id, ${cfmIdx},'customize'); changeThumbnail(this.id, 0, 'white')" 
+               onclick="changeText(this.id, ${cfmIdx},'customize'); changeThumbnail(this.id, 0, 'customize')" 
                class="card-img-overlay align-items-center d-flex justify-content-center">
               <input class="card-text text-center text-input" id = "customizeComp"> </input>
           </div>
@@ -506,6 +506,15 @@ function generateImg() {
     <img src="img/results/result4.png" class="card-img" alt="img">
   </div>
 </div>
+</div>
+
+<div class="container-fluid mb-3">
+<id="inline-text">
+
+  <span class="text-muted" id="inline-text">
+    <strong> Prompt: </strong>
+    <span id = "prevPrompt"> A high-end watch in gloss metal, sketch style </span>
+  </span>
 </div>
 
   `
